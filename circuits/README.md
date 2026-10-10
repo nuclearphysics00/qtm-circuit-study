@@ -32,8 +32,11 @@ python circuits/01_input_50ohm/draw_01_input_50ohm.py
 python circuits/02_qtc_timing/draw_02_qtc_timing.py
 python circuits/03_integrator/draw_03_integrator_only.py
 python circuits/03_integrator/plot_03_integrator.py
+python circuits/04_discharge/draw_04_discharge.py
 python circuits/04_discharge/plot_04_discharge.py
+python circuits/05_comparator/draw_05_comparator.py
 python circuits/05_comparator/plot_05_comparator.py
+python circuits/06_qtc_behavioral/draw_06_qtc_behavioral.py
 python circuits/06_qtc_behavioral/plot_06_qtc_simulation.py
 
 pytest -q

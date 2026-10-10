@@ -5,8 +5,14 @@
 ## ファイル
 
 - `04_discharge_only.cir`：ngspiceモデル
+- `draw_04_discharge.py`：回路図を生成するコード
+- `04_discharge_circuit.svg`：定電流放電回路
 - `plot_04_discharge.py`：過渡応答を計算して描画するコード
 - `04_discharge.svg`：放電電流、残留電荷、`cap`ノード電位
+
+## 回路図
+
+![定電流放電回路](04_discharge_circuit.svg)
 
 ## 各信号の過渡応答
 
@@ -60,6 +66,7 @@ $$
 ## 実行方法
 
 ```bash
+python circuits/04_discharge/draw_04_discharge.py
 python circuits/04_discharge/plot_04_discharge.py
 ngspice -b circuits/04_discharge/04_discharge_only.cir
 ```

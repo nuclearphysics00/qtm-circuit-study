@@ -5,8 +5,14 @@
 ## ファイル
 
 - `06_qtc_behavioral.cir`：ngspice機能モデル
+- `draw_06_qtc_behavioral.py`：回路図を生成するコード
+- `06_qtc_behavioral_circuit.svg`：入力からQTC出力までの接続図
 - `plot_06_qtc_simulation.py`：各ノードの過渡応答を描画するコード
 - `06_qtc_simulation.svg`：生成したタイミングチャート
+
+## 回路図
+
+![QTC機能モデルの回路図](06_qtc_behavioral_circuit.svg)
 
 ## 各ノードの過渡応答
 
@@ -71,6 +77,7 @@ $$
 ## 実行方法
 
 ```bash
+python circuits/06_qtc_behavioral/draw_06_qtc_behavioral.py
 python circuits/06_qtc_behavioral/plot_06_qtc_simulation.py
 ngspice -b circuits/06_qtc_behavioral/06_qtc_behavioral.cir
 ```

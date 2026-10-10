@@ -5,8 +5,14 @@
 ## ファイル
 
 - `05_comparator_only.cir`：ngspiceモデル
+- `draw_05_comparator.py`：回路図を生成するコード
+- `05_comparator_circuit.svg`：しきい値比較器の接続図
 - `plot_05_comparator.py`：各ノードの過渡応答を描画するコード
 - `05_comparator.svg`：入力・出力ノード電位
+
+## 回路図
+
+![しきい値比較器](05_comparator_circuit.svg)
 
 ## 各ノードの過渡応答
 
@@ -46,6 +52,7 @@ $$
 ## 実行方法
 
 ```bash
+python circuits/05_comparator/draw_05_comparator.py
 python circuits/05_comparator/plot_05_comparator.py
 ngspice -b circuits/05_comparator/05_comparator_only.cir
 ```
