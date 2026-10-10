@@ -1,0 +1,7 @@
+schemdraw==0.23
+skidl==2.2.3
+PySpice==1.5
+numpy==1.26.4
+pandas==2.3.3
+matplotlib==3.11.2
+pytest==8.4.2

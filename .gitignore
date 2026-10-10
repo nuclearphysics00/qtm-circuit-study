@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local environments and caches
+.venv/
+.cache/
+
+# Generated simulation artifacts
+outputs/
+*.raw
+*.log
+*.op.raw
+
+# Private/local reference copies
+references/private/
+
+# Editors and macOS
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*.swo
