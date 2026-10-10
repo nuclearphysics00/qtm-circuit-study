@@ -1,6 +1,6 @@
 # QTM circuit study
 
-QTM（Charge to Time Converter Module）の資料を読みながら、回路を一段ずつPythonとSPICEで再構成する学習projectです。
+QTM（Charge to Time Converter Module）の資料を読みながら、回路を一段ずつPythonとSPICEで再構成するprojectです。
 
 各段階を小さなGit差分として残します。
 
