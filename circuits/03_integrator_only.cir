@@ -1,0 +1,17 @@
+* Educational test: charge integration only
+* 20 mA for 10 ns gives 200 pC; 200 pC / 100 pF gives 2 V.
+
+.param CINT=100p
+
+Iinput 0 sense PULSE(0 20m 1n 1p 1p 10n 100n)
+Vsense sense cap 0
+Cint cap 0 {CINT}
+Rleak cap 0 1T
+
+.control
+tran 0.01n 20n
+meas tran input_charge INTEG i(Vsense) FROM=1n TO=11.001n
+meas tran capacitor_peak MAX v(cap) FROM=1n TO=20n
+.endc
+
+.end
