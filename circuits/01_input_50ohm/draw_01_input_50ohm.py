@@ -1,4 +1,4 @@
-"""Generate the practice diagram for a 50-ohm terminated input."""
+"""Generate the diagram for a 50-ohm terminated input."""
 #　左側のパルス電圧源で Vin を発生させ、右側の50Ω抵抗で終端される回路図を描画する。
 
 from pathlib import Path

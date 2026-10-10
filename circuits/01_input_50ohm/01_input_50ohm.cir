@@ -1,4 +1,4 @@
-* Practice model: 1 V, 10 ns pulse into a 50 ohm termination
+* 1 V, 10 ns pulse into a 50 ohm termination
 
 Vin input 0 PULSE(0 1 1n 1p 1p 10n 30n)
 Rterm input 0 50

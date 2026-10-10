@@ -1,0 +1,41 @@
+* QTC behavioral model: one channel and one range
+* The architecture and nominal gate times follow Nishino et al., NIM A 610 (2009).
+* CINT, IDIS, and VTH are study parameters, not verified CLC101 internal values.
+
+.param RTERM=50
+.param CINT=100p
+.param IDIS=1m
+.param VTH=0.1
+
+* 1 V, 10 ns input pulse: Q = integral(V/50 dt) = 200 pC
+Vin input 0 PULSE(0 1 20n 1p 1p 10n 1u)
+Rterm input 0 {RTERM}
+
+* Nominal timing controls: 400 ns charge gate and 350 ns discharge gate
+Vcharge charge_gate 0 PULSE(0 1 1n 1p 1p 400n 1u)
+Vdischarge discharge_gate 0 PULSE(0 1 401.001n 1p 1p 350n 1u)
+
+* Ideal V/I conversion and charge integration
+Bcharge 0 cap I = V(charge_gate) > 0.5 ? V(input) / RTERM : 0
+Cint cap 0 {CINT}
+Rleak cap 0 1T
+
+* Ideal constant-current discharge
+Bdischarge cap 0 I = V(discharge_gate) > 0.5 && V(cap) > 0 ? IDIS : 0
+
+* Logic-level representation of the QTC output pulse
+Boutput qtc_output 0 V = V(charge_gate) > 0.5 || V(cap) > VTH ? 1 : 0
+
+.control
+tran 0.05n 900n
+meas tran input_charge INTEG i(Vin) FROM=20n TO=30.001n
+let positive_input_charge = -input_charge
+meas tran capacitor_peak MAX v(cap) FROM=1n TO=401n
+meas tran discharge_time TRIG v(discharge_gate) VAL=0.5 RISE=1
++ TARG v(qtc_output) VAL=0.5 FALL=1
+meas tran output_width TRIG v(qtc_output) VAL=0.5 RISE=1
++ TARG v(qtc_output) VAL=0.5 FALL=1
+print positive_input_charge
+.endc
+
+.end

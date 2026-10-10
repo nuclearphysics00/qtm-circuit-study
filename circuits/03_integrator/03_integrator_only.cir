@@ -1,4 +1,4 @@
-* Educational test: charge integration only
+* Charge integration only
 * 20 mA for 10 ns gives 200 pC; 200 pC / 100 pF gives 2 V.
 
 .param CINT=100p

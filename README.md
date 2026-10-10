@@ -7,7 +7,7 @@ QTM（Charge to Time Converter Module）の資料を読みながら、回路を�
 ## Directory
 
 ```text
-circuits/                 SPICE netlist。回路を一つずつ追加する
+circuits/                 機能ブロック別のREADME、SPICEモデル、回路図、波形図
 references/               参照資料の所在と読取り記録
 src/qtm_circuit_study/    Python code
 tests/                    式・netlist・simulation結果のtest

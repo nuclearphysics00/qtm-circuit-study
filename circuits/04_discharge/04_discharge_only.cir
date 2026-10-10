@@ -1,0 +1,17 @@
+* Constant-current discharge only
+* A 100 pF capacitor starts at 2 V and discharges at 1 mA.
+
+.param CINT=100p
+.param IDIS=1m
+.param VTH=0.1
+
+Cint cap 0 {CINT} IC=2
+Idis cap 0 {IDIS}
+
+.control
+tran 0.05n 195n UIC
+meas tran threshold_time WHEN v(cap)=0.1 FALL=1
+meas tran voltage_at_190ns FIND v(cap) AT=190n
+.endc
+
+.end

@@ -1,0 +1,15 @@
+* Threshold comparator only
+* The input ramp crosses 0.1 V at 190 ns.
+
+.param VTH=0.1
+
+Vramp cap 0 PWL(0 2 200n 0 210n 0)
+Boutput comparator_output 0 V = V(cap) > VTH ? 1 : 0
+
+.control
+tran 0.05n 210n
+meas tran input_crossing WHEN v(cap)=0.1 FALL=1
+meas tran output_fall WHEN v(comparator_output)=0.5 FALL=1
+.endc
+
+.end

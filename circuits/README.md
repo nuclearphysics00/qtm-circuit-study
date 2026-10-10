@@ -1,87 +1,42 @@
 # circuits
 
-練習用の回路図とSPICE回路を置きます。現在の50 Ω入力回路は、QTM実機の内部回路ではありません。
+QTM（Charge to Time Converter Module）の動作を、機能ブロックごとに分けて確認します。各ディレクトリのREADMEに、回路または機能モデル、タイミングチャート、数式、実行方法をまとめています。
 
-## ファイル
+## 構成
 
-- `draw_01_input_50ohm.py`: Schemdrawで回路図を描くPythonコード
-- `01_input_50ohm.svg`: Pythonコードから生成した回路図
-- `01_input_50ohm.cir`: ngspiceで計算する回路
+| 番号 | 内容 | 説明 |
+|---|---|---|
+| 01 | [50 Ω入力回路](01_input_50ohm/README.md) | 入力電圧、入力電流、入力電荷の関係 |
+| 02 | [QTCタイミング概要](02_qtc_timing/README.md) | Charge、Discharge、VETOの動作順序 |
+| 03 | [電荷積分回路](03_integrator/README.md) | 入力電流から蓄積電荷と積分電圧への変換 |
+| 04 | [定電流放電](04_discharge/README.md) | 電荷を一定電流で放電時間へ変換する過程 |
+| 05 | [しきい値比較器](05_comparator/README.md) | 積分電圧のしきい値通過と論理出力 |
+| 06 | [QTC機能モデル](06_qtc_behavioral/README.md) | 各機能ブロックを接続した過渡応答 |
 
-## 回路図を作る
+## 波形の読み方
+
+- `V(node)`：ノード`node`のGNDに対する電位
+- `I(element)`：素子`element`を流れる枝電流
+- `Q(Cint)`：積分コンデンサに蓄積された電荷
+
+矩形パルスには単一の周波数がないため、過渡応答では「位相差」よりも、立ち上がり、しきい値通過、ゲート切り替えの**時間差**を確認します。正弦波に対する位相関係は、該当する回路のREADMEで別に説明します。
+
+## 一括確認
+
+リポジトリのルートから実行します。
 
 ```bash
 source .venv/bin/activate
-python circuits/draw_01_input_50ohm.py
+
+python circuits/01_input_50ohm/draw_01_input_50ohm.py
+python circuits/02_qtc_timing/draw_02_qtc_timing.py
+python circuits/03_integrator/draw_03_integrator_only.py
+python circuits/03_integrator/plot_03_integrator.py
+python circuits/04_discharge/plot_04_discharge.py
+python circuits/05_comparator/plot_05_comparator.py
+python circuits/06_qtc_behavioral/plot_06_qtc_simulation.py
+
+pytest -q
 ```
 
-### Schemdrawの呼び出し例
-
-```python
-drawing = schemdraw.Drawing(show=False)
-drawing.config(unit=3, fontsize=12)
-
-source = drawing.add(elm.SourcePulse().up().label("Vin(t)"))
-drawing.add(elm.Line().right().at(source.end).length(4))
-drawing.add(elm.Resistor().down().label("50 Ω"))
-drawing.add(elm.Line().to(source.start))
-drawing.add(elm.Ground().at(source.start))
-drawing.add(elm.Label().at((4, 3.45)).label("QTM input"))
-
-drawing.save("circuits/example.svg")
-```
-
-- 図面を作る：`schemdraw.Drawing()`
-- 部品を置く：`drawing.add(elm.部品名())`
-- 部品の向きを変える：`.up()`、`.down()`、`.left()`、`.right()`
-- 部品を指定位置に置く：`.at(...)`
-- 配線を指定位置まで引く：`elm.Line().to(...)`
-- 部品や配線の長さを変える：`.length(...)`
-- 文字を付ける：`.label(...)`
-- SVGを保存する：`drawing.save(...)`
-
-## SPICE計算をする
-
-```bash
-ngspice -b circuits/01_input_50ohm.cir
-```
-
-### ngspiceの呼び出し例
-
-```spice
-* 1 V、幅10 nsのパルス電圧源
-Vin input 0 PULSE(0 1 1n 1p 1p 10n 30n)
-
-* inputとGNDの間に50 ohmの抵抗を置く
-Rterm input 0 50
-
-.control
-tran 0.01n 15n
-let input_current = -i(Vin)
-meas tran peak_current MAX input_current FROM=1n TO=11n
-meas tran input_charge INTEG input_current FROM=1n TO=11.001n
-.endc
-
-.end
-```
-
-各行の読み方：
-
-- `Vin input 0 ...`
-  - `Vin`は電圧源の名前、`input`は接続点、`0`はGND
-- `PULSE(0 1 1n 1p 1p 10n 30n)`
-  - 0 Vから1 Vへ変化するパルス
-  - 1 ns後に開始、立ち上がりと立ち下がりは1 ps
-  - パルス幅は10 ns、周期は30 ns
-- `Rterm input 0 50`
-  - `input`とGNDの間に50 Ωの抵抗を接続する
-- `tran 0.01n 15n`
-  - 0.01 ns刻みで15 nsまで計算する
-- `let input_current = -i(Vin)`
-  - 入力方向の電流に`input_current`という名前を付ける
-- `meas ... MAX ...`
-  - 指定した時間内の最大電流を測る
-- `meas ... INTEG ...`
-  - 指定した時間内の電流を積分して電荷を求める
-
-現在の設定は、1 V、10 nsのパルスを50 Ωへ入力します。期待値は20 mA、約200 pCです。
+個々のSPICEモデルと生成物については、各ディレクトリのREADMEを参照してください。

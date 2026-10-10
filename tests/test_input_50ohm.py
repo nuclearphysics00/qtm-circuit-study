@@ -9,6 +9,7 @@ import pytest
 NETLIST = (
     Path(__file__).parents[1]
     / "circuits"
+    / "01_input_50ohm"
     / "01_input_50ohm.cir"
 )
 

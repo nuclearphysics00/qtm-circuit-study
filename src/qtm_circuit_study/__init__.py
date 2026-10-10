@@ -1,1 +1,1 @@
-"""Educational QTM circuit models and batch simulation tools."""
+"""QTM circuit models and batch simulation tools."""

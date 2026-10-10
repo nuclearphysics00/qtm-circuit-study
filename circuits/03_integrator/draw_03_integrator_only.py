@@ -1,4 +1,4 @@
-"""Draw the isolated educational charge integrator circuit."""
+"""Draw the isolated charge integrator circuit."""
 
 from pathlib import Path
 
@@ -38,7 +38,7 @@ def main() -> None:
 
     drawing.add(
         elm.Label().at((3.5, -1.2)).label(
-            "Educational model: Q = ∫Iinput dt,  V(cap) = Q / Cint"
+            "Q = ∫Iinput dt,  V(cap) = Q / Cint"
         )
     )
 
