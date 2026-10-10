@@ -1,0 +1,22 @@
+* 50-ohm source, lossless transmission line, and matched 50-ohm load
+
+.param RSOURCE=50
+.param ZLINE=50
+.param RLOAD=50
+.param TDELAY=5n
+
+* The 2 V source launches a 1 V wave through the 50-ohm source resistance.
+Vin source 0 PULSE(0 2 1n 50p 50p 10n 30n)
+Rsource source line_in {RSOURCE}
+Tline line_in 0 line_out 0 Z0={ZLINE} TD={TDELAY}
+Rload line_out 0 {RLOAD}
+
+.control
+tran 0.01n 22n
+meas tran launched_voltage AVG v(line_in) FROM=2n TO=5n
+meas tran load_voltage AVG v(line_out) FROM=7n TO=10n
+meas tran propagation_delay TRIG v(line_in) VAL=0.5 RISE=1
++ TARG v(line_out) VAL=0.5 RISE=1
+.endc
+
+.end

@@ -1,0 +1,16 @@
+* Passive RC integrator: output is measured across the capacitor
+
+.param RINT=1k
+.param CINT=100p
+
+Vin input 0 PULSE(0 1 1n 50p 50p 10n 100n)
+Rint input output {RINT}
+Cint output 0 {CINT}
+
+.control
+tran 0.01n 40n
+meas tran output_peak MAX v(output) FROM=1n TO=12n
+meas tran output_at_11ns FIND v(output) AT=11n
+.endc
+
+.end

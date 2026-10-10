@@ -1,0 +1,16 @@
+* Passive RC differentiator: output is measured across the resistor
+
+.param RDIFF=1k
+.param CDIFF=1p
+
+Vin input 0 PULSE(0 1 5n 50p 50p 10n 100n)
+Cdiff input output {CDIFF}
+Rdiff output 0 {RDIFF}
+
+.control
+tran 0.01n 25n
+meas tran positive_peak MAX v(output) FROM=4.9n TO=7n
+meas tran negative_peak MIN v(output) FROM=14.9n TO=17n
+.endc
+
+.end
