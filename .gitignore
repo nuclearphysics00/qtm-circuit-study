@@ -18,6 +18,7 @@ outputs/
 
 # Private/local reference copies
 references/private/
+references/README.md
 
 # Editors and macOS
 .vscode/
