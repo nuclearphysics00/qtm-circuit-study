@@ -2,18 +2,7 @@
 
 QTM（Charge to Time Converter Module）の資料を読みながら、回路を一段ずつPythonとSPICEで再構成する学習projectです。
 
-各段階を小さなGit差分として残します。実機QTMの製造回路図が確認できない部分は推測で補わず、教育用modelとして明記します。
-
-## 目的
-
-- 50 ohm入力から電荷を計算する。
-- 電荷積分、定電流放電、charge-to-time変換を順番に理解する。
-- schemdrawで説明用回路図を生成する。
-- ngspice/PySpiceでbatch simulationを実行する。
-- 入力電荷と出力pulse幅の関係をCSVとplotに残す。
-- Small/Medium/Largeの3 rangeへ段階的に拡張する。
-
-このprojectはQTM実機の設定・USB制御を行いません。QTM control softwareとsimulation codeは分離します。
+各段階を小さなGit差分として残します。
 
 ## Directory
 
